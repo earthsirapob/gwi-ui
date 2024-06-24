@@ -1,17 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Button from '@mui/material/Button'
 
 interface MyButtonProps {
-  text: string
-  onClick: () => void
+  children: React.ReactNode
+  onClick?: () => void
+  [key: string]: any
 }
 
-const MyButton: React.FC<MyButtonProps> = ({ text, onClick }) => {
-  return (
-    <Button variant="contained" onClick={onClick}>
-      {text}
-    </Button>
-  )
+const MyButton: FC<MyButtonProps> = ({ children, ...props }) => {
+  return <Button {...props}>{children}</Button>
 }
 
 export default MyButton
