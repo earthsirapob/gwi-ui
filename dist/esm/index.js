@@ -2835,19 +2835,19 @@ function requireReact_development () {
 	return react_development.exports;
 }
 
-var hasRequiredReact;
-
-function requireReact () {
-	if (hasRequiredReact) return react.exports;
-	hasRequiredReact = 1;
-
-	if (process.env.NODE_ENV === 'production') {
-	  react.exports = requireReact_production_min();
-	} else {
-	  react.exports = requireReact_development();
-	}
-	return react.exports;
+if (process.env.NODE_ENV === 'production') {
+  react.exports = requireReact_production_min();
+} else {
+  react.exports = requireReact_development();
 }
+
+var reactExports = react.exports;
+var React = /*@__PURE__*/getDefaultExportFromCjs(reactExports);
+
+var React$1 = /*#__PURE__*/_mergeNamespaces({
+	__proto__: null,
+	default: React
+}, [reactExports]);
 
 /**
  * @license React
@@ -2864,7 +2864,7 @@ var hasRequiredReactJsxRuntime_production_min;
 function requireReactJsxRuntime_production_min () {
 	if (hasRequiredReactJsxRuntime_production_min) return reactJsxRuntime_production_min;
 	hasRequiredReactJsxRuntime_production_min = 1;
-var f=requireReact(),k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
+var f=reactExports,k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
 	function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return {$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}reactJsxRuntime_production_min.Fragment=l;reactJsxRuntime_production_min.jsx=q;reactJsxRuntime_production_min.jsxs=q;
 	return reactJsxRuntime_production_min;
 }
@@ -2890,7 +2890,7 @@ function requireReactJsxRuntime_development () {
 	if (process.env.NODE_ENV !== "production") {
 	  (function() {
 
-	var React = requireReact();
+	var React = reactExports;
 
 	// ATTENTION
 	// When adding new symbols to this file,
@@ -4232,14 +4232,6 @@ function _extends$1() {
     return n;
   }, _extends$1.apply(null, arguments);
 }
-
-var reactExports = requireReact();
-var React = /*@__PURE__*/getDefaultExportFromCjs(reactExports);
-
-var React$1 = /*#__PURE__*/_mergeNamespaces({
-	__proto__: null,
-	default: React
-}, [reactExports]);
 
 var propTypes = {exports: {}};
 
@@ -7929,10 +7921,10 @@ if (!isBrowser$2) {
   };
 }
 
-var ThemeContext$1 = /* #__PURE__ */reactExports.createContext({});
+var ThemeContext$2 = /* #__PURE__ */reactExports.createContext({});
 
 if (process.env.NODE_ENV !== 'production') {
-  ThemeContext$1.displayName = 'EmotionThemeContext';
+  ThemeContext$2.displayName = 'EmotionThemeContext';
 }
 
 var typePropName = '__EMOTION_TYPE_PLEASE_DO_NOT_USE__';
@@ -7985,7 +7977,7 @@ var Emotion = /* #__PURE__ */withEmotionCache(function (props, cache, ref) {
     className = props.className + " ";
   }
 
-  var serialized = serializeStyles(registeredStyles, undefined, reactExports.useContext(ThemeContext$1));
+  var serialized = serializeStyles(registeredStyles, undefined, reactExports.useContext(ThemeContext$2));
 
   if (process.env.NODE_ENV !== 'production' && serialized.name.indexOf('-') === -1) {
     var labelFromStack = props[labelPropName];
@@ -8164,7 +8156,7 @@ var Global = /* #__PURE__ */withEmotionCache(function (props, cache) {
   }
 
   var styles = props.styles;
-  var serialized = serializeStyles([styles], undefined, reactExports.useContext(ThemeContext$1));
+  var serialized = serializeStyles([styles], undefined, reactExports.useContext(ThemeContext$2));
 
   if (!isBrowser$2) {
     var _ref;
@@ -8410,7 +8402,7 @@ var ClassNames = /* #__PURE__ */withEmotionCache(function (props, cache) {
   var content = {
     css: css,
     cx: cx,
-    theme: reactExports.useContext(ThemeContext$1)
+    theme: reactExports.useContext(ThemeContext$2)
   };
   var ele = props.children(content);
   hasRendered = true;
@@ -8566,7 +8558,7 @@ var createStyled$1 = function createStyled(tag, options) {
           mergedProps[key] = props[key];
         }
 
-        mergedProps.theme = reactExports.useContext(ThemeContext$1);
+        mergedProps.theme = reactExports.useContext(ThemeContext$2);
       }
 
       if (typeof props.className === 'string') {
@@ -8722,7 +8714,7 @@ var styledEngine = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	GlobalStyles: GlobalStyles$2,
 	StyledEngineProvider: StyledEngineProvider,
-	ThemeContext: ThemeContext$1,
+	ThemeContext: ThemeContext$2,
 	css: css,
 	default: styled$1,
 	internal_processStyles: internal_processStyles,
@@ -9478,14 +9470,14 @@ margin.propTypes = process.env.NODE_ENV !== 'production' ? marginKeys.reduce((ob
   return obj;
 }, {}) : {};
 margin.filterProps = marginKeys;
-function padding(props) {
+function padding$2(props) {
   return style(props, paddingKeys);
 }
-padding.propTypes = process.env.NODE_ENV !== 'production' ? paddingKeys.reduce((obj, key) => {
+padding$2.propTypes = process.env.NODE_ENV !== 'production' ? paddingKeys.reduce((obj, key) => {
   obj[key] = responsivePropType;
   return obj;
 }, {}) : {};
-padding.filterProps = paddingKeys;
+padding$2.filterProps = paddingKeys;
 process.env.NODE_ENV !== 'production' ? spacingKeys.reduce((obj, key) => {
   obj[key] = responsivePropType;
   return obj;
@@ -9573,7 +9565,7 @@ const outlineColor = createBorderStyle('outlineColor');
 
 // false positive
 // eslint-disable-next-line react/function-component-definition
-const borderRadius = props => {
+const borderRadius$2 = props => {
   if (props.borderRadius !== undefined && props.borderRadius !== null) {
     const transformer = createUnaryUnit(props.theme, 'shape.borderRadius', 4, 'borderRadius');
     const styleFromPropValue = propValue => ({
@@ -9583,11 +9575,11 @@ const borderRadius = props => {
   }
   return null;
 };
-borderRadius.propTypes = process.env.NODE_ENV !== 'production' ? {
+borderRadius$2.propTypes = process.env.NODE_ENV !== 'production' ? {
   borderRadius: responsivePropType
 } : {};
-borderRadius.filterProps = ['borderRadius'];
-compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius, outline, outlineColor);
+borderRadius$2.filterProps = ['borderRadius'];
+compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius$2, outline, outlineColor);
 
 // false positive
 // eslint-disable-next-line react/function-component-definition
@@ -9674,7 +9666,7 @@ function paletteTransform(value, userValue) {
   }
   return value;
 }
-const color = style$1({
+const color$2 = style$1({
   prop: 'color',
   themeKey: 'palette',
   transform: paletteTransform
@@ -9690,7 +9682,7 @@ const backgroundColor = style$1({
   themeKey: 'palette',
   transform: paletteTransform
 });
-compose(color, bgcolor, backgroundColor);
+compose(color$2, bgcolor, backgroundColor);
 
 function sizingTransform(value) {
   return value <= 1 && value !== 0 ? `${value * 100}%` : value;
@@ -9800,7 +9792,7 @@ const defaultSxConfig = {
   },
   borderRadius: {
     themeKey: 'shape.borderRadius',
-    style: borderRadius
+    style: borderRadius$2
   },
   // palette
   color: {
@@ -9818,64 +9810,64 @@ const defaultSxConfig = {
   },
   // spacing
   p: {
-    style: padding
+    style: padding$2
   },
   pt: {
-    style: padding
+    style: padding$2
   },
   pr: {
-    style: padding
+    style: padding$2
   },
   pb: {
-    style: padding
+    style: padding$2
   },
   pl: {
-    style: padding
+    style: padding$2
   },
   px: {
-    style: padding
+    style: padding$2
   },
   py: {
-    style: padding
+    style: padding$2
   },
   padding: {
-    style: padding
+    style: padding$2
   },
   paddingTop: {
-    style: padding
+    style: padding$2
   },
   paddingRight: {
-    style: padding
+    style: padding$2
   },
   paddingBottom: {
-    style: padding
+    style: padding$2
   },
   paddingLeft: {
-    style: padding
+    style: padding$2
   },
   paddingX: {
-    style: padding
+    style: padding$2
   },
   paddingY: {
-    style: padding
+    style: padding$2
   },
   paddingInline: {
-    style: padding
+    style: padding$2
   },
   paddingInlineStart: {
-    style: padding
+    style: padding$2
   },
   paddingInlineEnd: {
-    style: padding
+    style: padding$2
   },
   paddingBlock: {
-    style: padding
+    style: padding$2
   },
   paddingBlockStart: {
-    style: padding
+    style: padding$2
   },
   paddingBlockEnd: {
-    style: padding
+    style: padding$2
   },
   m: {
     style: margin
@@ -11350,14 +11342,14 @@ function getThemeProps(params) {
 function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
-function useTheme$3(defaultTheme = null) {
-  const contextTheme = reactExports.useContext(ThemeContext$1);
+function useTheme$4(defaultTheme = null) {
+  const contextTheme = reactExports.useContext(ThemeContext$2);
   return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme : contextTheme;
 }
 
 const systemDefaultTheme = createTheme$2();
-function useTheme$2(defaultTheme = systemDefaultTheme) {
-  return useTheme$3(defaultTheme);
+function useTheme$3(defaultTheme = systemDefaultTheme) {
+  return useTheme$4(defaultTheme);
 }
 
 function useThemeProps$1({
@@ -11366,7 +11358,7 @@ function useThemeProps$1({
   defaultTheme,
   themeId
 }) {
-  let theme = useTheme$2(defaultTheme);
+  let theme = useTheme$3(defaultTheme);
   if (themeId) {
     theme = theme[themeId] || theme;
   }
@@ -12425,7 +12417,7 @@ var hasRequiredReactDom_production_min;
 function requireReactDom_production_min () {
 	if (hasRequiredReactDom_production_min) return reactDom_production_min;
 	hasRequiredReactDom_production_min = 1;
-var aa=requireReact(),ca=requireScheduler();function p(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return "Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var da=new Set,ea={};function fa(a,b){ha(a,b);ha(a+"Capture",b);}
+var aa=reactExports,ca=requireScheduler();function p(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return "Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var da=new Set,ea={};function fa(a,b){ha(a,b);ha(a+"Capture",b);}
 	function ha(a,b){ea[a]=b;for(a=0;a<b.length;a++)da.add(b[a]);}
 	var ia=!("undefined"===typeof window||"undefined"===typeof window.document||"undefined"===typeof window.document.createElement),ja=Object.prototype.hasOwnProperty,ka=/^[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\-.0-9\u00B7\u0300-\u036F\u203F-\u2040]*$/,la=
 	{},ma={};function oa(a){if(ja.call(ma,a))return !0;if(ja.call(la,a))return !1;if(ka.test(a))return ma[a]=!0;la[a]=!0;return !1}function pa(a,b,c,d){if(null!==c&&0===c.type)return !1;switch(typeof b){case "function":case "symbol":return !0;case "boolean":if(d)return !1;if(null!==c)return !c.acceptsBooleans;a=a.toLowerCase().slice(0,5);return "data-"!==a&&"aria-"!==a;default:return !1}}
@@ -12766,7 +12758,7 @@ function requireReactDom_development () {
 	) {
 	  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
 	}
-	          var React = requireReact();
+	          var React = reactExports;
 	var Scheduler = requireScheduler();
 
 	var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
@@ -43657,7 +43649,7 @@ function GlobalStyles$1({
   themeId,
   defaultTheme = {}
 }) {
-  const upperTheme = useTheme$2(defaultTheme);
+  const upperTheme = useTheme$3(defaultTheme);
   const globalStyles = typeof styles === 'function' ? styles(themeId ? upperTheme[themeId] || upperTheme : upperTheme) : styles;
   return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$2, {
     styles: globalStyles
@@ -43947,13 +43939,13 @@ validator.isRequired = requiredInteger;
 validatorNoop.isRequired = validatorNoop;
 var integerPropType = process.env.NODE_ENV === 'production' ? validatorNoop : validator;
 
-const ThemeContext = /*#__PURE__*/reactExports.createContext(null);
+const ThemeContext$1 = /*#__PURE__*/reactExports.createContext(null);
 if (process.env.NODE_ENV !== 'production') {
-  ThemeContext.displayName = 'ThemeContext';
+  ThemeContext$1.displayName = 'ThemeContext';
 }
 
-function useTheme$1() {
-  const theme = reactExports.useContext(ThemeContext);
+function useTheme$2() {
+  const theme = reactExports.useContext(ThemeContext$1);
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     reactExports.useDebugValue(theme);
@@ -43987,7 +43979,7 @@ function ThemeProvider$3(props) {
     children,
     theme: localTheme
   } = props;
-  const outerTheme = useTheme$1();
+  const outerTheme = useTheme$2();
   if (process.env.NODE_ENV !== 'production') {
     if (outerTheme === null && typeof localTheme === 'function') {
       console.error(['MUI: You are providing a theme function prop to the ThemeProvider component:', '<ThemeProvider theme={outerTheme => outerTheme} />', '', 'However, no outer theme is present.', 'Make sure a theme is already injected higher in the React tree ' + 'or provide a theme object.'].join('\n'));
@@ -44000,7 +43992,7 @@ function ThemeProvider$3(props) {
     }
     return output;
   }, [localTheme, outerTheme]);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(ThemeContext.Provider, {
+  return /*#__PURE__*/jsxRuntimeExports.jsx(ThemeContext$1.Provider, {
     value: theme,
     children: children
   });
@@ -44074,8 +44066,8 @@ function ThemeProvider$2(props) {
     theme: localTheme,
     themeId
   } = props;
-  const upperTheme = useTheme$3(EMPTY_THEME);
-  const upperPrivateTheme = useTheme$1() || EMPTY_THEME;
+  const upperTheme = useTheme$4(EMPTY_THEME);
+  const upperPrivateTheme = useTheme$2() || EMPTY_THEME;
   if (process.env.NODE_ENV !== 'production') {
     if (upperTheme === null && typeof localTheme === 'function' || themeId && upperTheme && !upperTheme[themeId] && typeof localTheme === 'function') {
       console.error(['MUI: You are providing a theme function prop to the ThemeProvider component:', '<ThemeProvider theme={outerTheme => outerTheme} />', '', 'However, no outer theme is present.', 'Make sure a theme is already injected higher in the React tree ' + 'or provide a theme object.'].join('\n'));
@@ -44086,7 +44078,7 @@ function ThemeProvider$2(props) {
   const rtlValue = engineTheme.direction === 'rtl';
   return /*#__PURE__*/jsxRuntimeExports.jsx(ThemeProvider$3, {
     theme: privateTheme,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(ThemeContext$1.Provider, {
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(ThemeContext$2.Provider, {
       value: engineTheme,
       children: /*#__PURE__*/jsxRuntimeExports.jsx(RtlProvider, {
         value: rtlValue,
@@ -45374,8 +45366,8 @@ const getOverlayAlpha = elevation => {
   return (alphaValue / 100).toFixed(2);
 };
 
-function useTheme() {
-  const theme = useTheme$2(defaultTheme);
+function useTheme$1() {
+  const theme = useTheme$3(defaultTheme);
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     reactExports.useDebugValue(theme);
@@ -45453,7 +45445,7 @@ const Paper = /*#__PURE__*/reactExports.forwardRef(function Paper(inProps, ref) 
   const classes = useUtilityClasses$l(ownerState);
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const theme = useTheme();
+    const theme = useTheme$1();
     if (theme.shadows[elevation] === undefined) {
       console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join('\n'));
     }
@@ -45542,7 +45534,7 @@ const CardRoot = styled(Paper, {
     overflow: 'hidden'
   };
 });
-const Card = /*#__PURE__*/reactExports.forwardRef(function Card(inProps, ref) {
+const Card$1 = /*#__PURE__*/reactExports.forwardRef(function Card(inProps, ref) {
   const props = useThemeProps({
     props: inProps,
     name: 'MuiCard'
@@ -45563,7 +45555,7 @@ const Card = /*#__PURE__*/reactExports.forwardRef(function Card(inProps, ref) {
     ownerState: ownerState
   }, other));
 });
-process.env.NODE_ENV !== "production" ? Card.propTypes /* remove-proptypes */ = {
+process.env.NODE_ENV !== "production" ? Card$1.propTypes /* remove-proptypes */ = {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
   // │ These PropTypes are generated from the TypeScript type definitions. │
   // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
@@ -45756,8 +45748,8 @@ process.env.NODE_ENV !== "production" ? CardActions.propTypes /* remove-proptype
   sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
 } : void 0;
 
-const MyCard = ({ children, actions }) => {
-    return (jsxRuntimeExports.jsxs(Card, { children: [jsxRuntimeExports.jsx(CardContent, { children: children }), actions && jsxRuntimeExports.jsx(CardActions, { children: actions })] }));
+const Card = ({ children, actions }) => {
+    return (jsxRuntimeExports.jsxs(Card$1, { children: [jsxRuntimeExports.jsx(CardContent, { children: children }), actions && jsxRuntimeExports.jsx(CardActions, { children: actions })] }));
 };
 
 /**
@@ -50464,7 +50456,7 @@ const Grow = /*#__PURE__*/reactExports.forwardRef(function Grow(props, ref) {
     other = _objectWithoutPropertiesLoose(props, _excluded$b);
   const timer = useTimeout();
   const autoTimeout = reactExports.useRef();
-  const theme = useTheme();
+  const theme = useTheme$1();
   const nodeRef = reactExports.useRef(null);
   const handleRef = useForkRef(nodeRef, children.ref, ref);
   const normalizedTransitionCallback = callback => maybeIsAppearing => {
@@ -50674,7 +50666,7 @@ const styles = {
  * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
 const Fade = /*#__PURE__*/reactExports.forwardRef(function Fade(props, ref) {
-  const theme = useTheme();
+  const theme = useTheme$1();
   const defaultTimeout = {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen
@@ -53907,10 +53899,3184 @@ process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = {
   theme: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired
 } : void 0;
 
-const ThemeProvider = ({ themeOptions, children }) => {
-    const theme = createTheme(themeOptions);
-    return jsxRuntimeExports.jsx(ThemeProvider$1, { theme: theme, children: children });
+var _VariantGroup$1 = "#9747ff";
+var borderRadius$1 = {
+	lg: "1px",
+	max: "240px",
+	md: "1px",
+	sm: "1px",
+	xl: "1px",
+	xs: "1px"
+};
+var borderWidth$1 = {
+	bold: "2px",
+	regular: "1px"
+};
+var color$1 = {
+	Accent: {
+		Border: {
+			Blue: "#234195",
+			Green: "#326032",
+			Indigo: "#3c36a2",
+			Lime: "#436119",
+			Orange: "#863508",
+			Pink: "#881354",
+			Purple: "#810c80",
+			Red: "#881a10",
+			Sky: "#1e566f",
+			Teal: "#1c5950",
+			Violet: "#6026a4",
+			Yellow: "#7d4f11"
+		},
+		Content: {
+			Blue: "#85b0f4",
+			Green: "#52cc85",
+			Indigo: "#97aafe",
+			Lime: "#a2c132",
+			Orange: "#f5984c",
+			Pink: "#f588d6",
+			Purple: "#dd94ea",
+			Red: "#fc8e8e",
+			Sky: "#4dbcd3",
+			Teal: "#3fc6af",
+			Violet: "#b7a0f8",
+			Yellow: "#ddac29"
+		},
+		Foreground: {
+			Blue: "#1e2852",
+			Green: "#15341c",
+			Indigo: "#312456",
+			Lime: "#24320a",
+			Orange: "#4e1e0b",
+			Pink: "#4d192e",
+			Purple: "#491945",
+			Red: "#4d1513",
+			Sky: "#143041",
+			Teal: "#14322f",
+			Violet: "#392151",
+			Yellow: "#422706"
+		}
+	},
+	Base: {
+		Foreground: {
+			Disable: "#222337",
+			"Disable Overlay": "rgba(0, 0, 0, 0.53)",
+			"Elevated-0": "#171828",
+			"Elevated-4": "#1d1e30",
+			"Elevated-8": "#222337",
+			"Elevated-16": "#292a3f",
+			Ground: "#0d0e19",
+			"Ground Alt": "#0d0e19",
+			Hover: "#3d3f56",
+			Invert: "#ffffff",
+			Moderate: "#3d3f56",
+			Pressed: "#2f3046",
+			"Screen Overlay": "rgba(0, 0, 0, 0.25)",
+			Subtle: "#2f3046",
+			Transparent: "rgba(0, 0, 0, 0)",
+			"Transparent Focused": "rgba(0, 0, 0, 0.01)"
+		}
+	},
+	Beauty: {
+		Border: {
+			Default: "#891645",
+			Strong: "#fa93af"
+		},
+		Content: {
+			Default: "#eb5086",
+			Hover: "#fa93af",
+			Pressed: "#cc1266"
+		},
+		Foreground: {
+			Default: "#fa93af",
+			Hover: "#fdc0ce",
+			"Muted Hover": "#541d2f",
+			"Muted Pressed": "#401c26",
+			Pressed: "#cc1266",
+			Subtle: "#401c26",
+			"Subtle Hover": "#6a1937",
+			"Subtle Pressed": "#541d2f"
+		}
+	},
+	Functional: {
+		Border: {
+			"Error": "#881a10",
+			"Error Strong": "#fc8e8e"
+		},
+		Content: {
+			"Error": "#fc8e8e",
+			"Error Hover": "#ffb9ba",
+			"Error Pressed": "#c5312f",
+			Info: "#85b0f4",
+			Success: "#52cc85",
+			Warning: "#ddac29"
+		},
+		Foreground: {
+			"Error": "#fc8e8e",
+			"Error Hover": "#ffb9ba",
+			"Error Muted Hover": "#4d1513",
+			"Error Muted Pressed": "#5e170f",
+			"Error Pressed": "#c5312f",
+			"Error Subtle": "#4d1513",
+			"Error Subtle Hover": "#6f160d",
+			"Error Subtle Pressed": "#5e170f",
+			Info: "#85b0f4",
+			"Info Subtle": "#1e2852",
+			Success: "#52cc85",
+			"Success Subtle": "#15341c",
+			Warning: "#ddac29",
+			"Warning Subtle": "#422706"
+		}
+	},
+	Lifestyle: {
+		Border: {
+			Default: "#1c4984",
+			Strong: "#8ab1ff"
+		},
+		Content: {
+			Default: "#5c95f1",
+			Hover: "#8ab1ff",
+			Pressed: "#3472c8"
+		},
+		Foreground: {
+			Default: "#8ab1ff",
+			Hover: "#b7ccff",
+			"Muted Hover": "#122e56",
+			"Muted Pressed": "#102749",
+			Pressed: "#3472c8",
+			Subtle: "#102749",
+			"Subtle Hover": "#153a6a",
+			"Subtle Pressed": "#122e56"
+		}
+	},
+	"on-Accent": {
+		Border: {
+			Default: "rgba(0, 0, 0, 0.18)"
+		},
+		Content: {
+			High: "rgba(0, 0, 0, 0.8)",
+			Low: "rgba(0, 0, 0, 0.25)",
+			Medium: "rgba(0, 0, 0, 0.6)"
+		}
+	},
+	"on-Base": {
+		Border: {
+			Default: "#676767",
+			Disable: "#434343"
+		},
+		Content: {
+			Disable: "#555555",
+			High: "#ececec",
+			Invert: "rgba(0, 0, 0, 0.8)",
+			Low: "#888888",
+			Medium: "#d1d1d1"
+		}
+	},
+	"on-Beauty": {
+		Border: {
+			Default: "rgba(0, 0, 0, 0.18)"
+		},
+		Content: {
+			High: "rgba(0, 0, 0, 0.8)",
+			Low: "rgba(0, 0, 0, 0.25)",
+			Medium: "rgba(0, 0, 0, 0.6)"
+		}
+	},
+	"on-Functional": {
+		Border: {
+			Default: "rgba(0, 0, 0, 0.18)"
+		},
+		Content: {
+			High: "rgba(0, 0, 0, 0.8)",
+			Low: "rgba(0, 0, 0, 0.25)",
+			Medium: "rgba(0, 0, 0, 0.6)"
+		}
+	},
+	"on-Lifestyle": {
+		Border: {
+			Default: "rgba(0, 0, 0, 0.18)"
+		},
+		Content: {
+			High: "rgba(0, 0, 0, 0.8)",
+			Low: "rgba(0, 0, 0, 0.25)",
+			Medium: "rgba(0, 0, 0, 0.6)"
+		}
+	},
+	"on-Primary": {
+		Border: {
+			Default: "rgba(0, 0, 0, 0.18)"
+		},
+		Content: {
+			High: "rgba(0, 0, 0, 0.8)",
+			Low: "rgba(0, 0, 0, 0.25)",
+			Medium: "rgba(0, 0, 0, 0.6)"
+		}
+	},
+	"on-Secondary": {
+		Border: {
+			Default: "rgba(0, 0, 0, 0.18)"
+		},
+		Content: {
+			High: "rgba(0, 0, 0, 0.8)",
+			Low: "rgba(0, 0, 0, 0.25)",
+			Medium: "rgba(0, 0, 0, 0.6)"
+		}
+	},
+	"on-Static": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			Disable: "rgba(255, 255, 255, 0.33)",
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	Primary: {
+		Border: {
+			Default: "#434343",
+			Strong: "#ffffff"
+		},
+		Content: {
+			Default: "#ffffff",
+			Hover: "#cdcdcd",
+			Pressed: "#8c8c8c"
+		},
+		Foreground: {
+			Default: "#ffffff",
+			Hover: "#f5f5f5",
+			"Muted Hover": "#000000",
+			"Muted Pressed": "#222222",
+			Pressed: "#ececec",
+			Subtle: "#000000",
+			"Subtle Hover": "#333333",
+			"Subtle Pressed": "#222222"
+		}
+	},
+	Secondary: {
+		Border: {
+			Default: "#2e3c88",
+			Strong: "#adade2"
+		},
+		Content: {
+			Default: "#8a8bc8",
+			Hover: "#adade2",
+			Pressed: "#6065ae"
+		},
+		Foreground: {
+			Default: "#adade2",
+			Hover: "#cbcaf6",
+			"Muted Hover": "#252a57",
+			"Muted Pressed": "#232442",
+			Pressed: "#6065ae",
+			Subtle: "#232442",
+			"Subtle Hover": "#27326f",
+			"Subtle Pressed": "#252a57"
+		}
+	},
+	Social: {
+		"Border-AppleOutline-Default": "#000000",
+		"Border-KP-Default": "#0b56a4",
+		"Content-AppleBlack-Default": "#ffffff",
+		"Content-AppleWhite-Default": "#000000",
+		"Content-Facebook-Default": "#ffffff",
+		"Content-KP-Default": "#0b56a4",
+		"Foreground-AppleBlack-Default": "#ffffff",
+		"Foreground-AppleOutline-Default": "#ffffff",
+		"Foreground-AppleWhite-Default": "#000000",
+		"Foreground-Facebook-Default": "#1877f2",
+		"Foreground-KP-Default": "#0b56a4"
+	},
+	Static: {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)",
+			Strong: "rgba(255, 255, 255, 0.65)"
+		},
+		Content: {
+			Default: "#ffffff"
+		},
+		Foreground: {
+			Disable: "rgba(255, 255, 255, 0.13)",
+			Subtle: "rgba(255, 255, 255, 0.33)",
+			"Subtle Hover": "rgba(255, 255, 255, 0.26)",
+			"Subtle Pressed": "rgba(255, 255, 255, 0.2)"
+		}
+	}
+};
+var comp$1 = {
+	alert: {
+		borderRadius: {
+			"default": "1px"
+		},
+		padding: {
+			"default": "16px"
+		}
+	},
+	badge: {
+		borderRadius: {
+			"default": "0px"
+		},
+		gap: {
+			content: {
+				large: "8px",
+				medium: "6px",
+				small: "4px"
+			}
+		},
+		padding: {
+			horizontal: {
+				large: "8px",
+				medium: "6px",
+				small: "4px"
+			}
+		},
+		sem: {
+			color: {
+				"background-oos": "#888888",
+				"background-privilege": "#422706",
+				"background-promotion": "#4e1e0b",
+				"background-scarcity": "#14322f",
+				"background-social": "#1e2852",
+				"background-special": "#ffffff",
+				"content-oos": "#ffffff",
+				"content-privilege": "#ddac29",
+				"content-promotion": "#f5984c",
+				"content-scarcity": "#3fc6af",
+				"content-social": "#85b0f4",
+				"content-special": "#000000cc"
+			}
+		},
+		size: {
+			height: {
+				large: "32px",
+				medium: "24px",
+				small: "20px"
+			}
+		}
+	},
+	btn: {
+		borderRadius: {
+			"default": "1px",
+			link: "0px"
+		},
+		borderWidth: {
+			"default": "1px",
+			ghost: "0px",
+			primary: "1px",
+			secondary: "1px",
+			tertiary: "0px"
+		},
+		color: {
+			background: {
+				"default-danger-hover": "#4d1513",
+				"default-danger-normal": "#292A3F",
+				"default-danger-pressed": "#5e170f",
+				"default-hover": "#3d3f56",
+				"default-normal": "#292A3F",
+				"default-pressed": "#2f3046",
+				disable: "#222337",
+				"ghost-danger-disable": "#00000000",
+				"ghost-danger-hover": "#4d1513",
+				"ghost-danger-normal": "#00000000",
+				"ghost-danger-press": "#5e170f",
+				"ghost-disable": "#00000000",
+				"ghost-hover": "#3d3f56",
+				"ghost-normal": "#00000000",
+				"ghost-pressed": "#2f3046",
+				link: "#00000000",
+				"primary-danger-hover": "#ffb9ba",
+				"primary-danger-normal": "#fc8e8e",
+				"primary-danger-pressed": "#c5312f",
+				"primary-hover": "#f5f5f5",
+				"primary-normal": "#ffffff",
+				"primary-pressed": "#ececec",
+				"secondary-danger-hover": "#6f160d",
+				"secondary-danger-normal": "#4d1513",
+				"secondary-danger-pressed": "#5e170f",
+				"secondary-hover": "#27326f",
+				"secondary-normal": "#232442",
+				"secondary-pressed": "#252a57",
+				"tertiary-danger-hover": "#4d1513",
+				"tertiary-danger-normal": "#00000000",
+				"tertiary-danger-pressed": "#5e170f",
+				"tertiary-disable": "#00000000",
+				"tertiary-hover": "#252a57",
+				"tertiary-normal": "#00000000",
+				"tertiary-pressed": "#232442"
+			},
+			border: {
+				"default": "#676767",
+				"default-hover": "#676767",
+				"default-pressed": "#676767",
+				disable: "#434343",
+				ghost: "#00000000",
+				"ghost-disable": "#00000000",
+				"ghost-hover": "#00000000",
+				"ghost-pressed": "#00000000",
+				primary: "#ffffff",
+				"primary-hover": "#ffffff",
+				"primary-pressed": "#ffffff",
+				secondary: "#2e3c88",
+				"secondary-hover": "#2e3c88",
+				"secondary-pressed": "#2e3c88",
+				tertiary: "#00000000",
+				"tertiary-disable": "#00000000",
+				"tertiary-hover": "#00000000",
+				"tertiary-pressed": "#00000000"
+			},
+			content: {
+				"default": "#ececec",
+				disable: "#555555",
+				ghost: "#ececec",
+				"link-hover": "#adade2",
+				"link-normal": "#8a8bc8",
+				"link-pressed": "#6065ae",
+				"primary-hover": "#000000cc",
+				"primary-normal": "#000000cc",
+				"primary-pressed": "#000000cc",
+				"secondary-hover": "#adade2",
+				"secondary-normal": "#8a8bc8",
+				"secondary-pressed": "#6065ae",
+				tertiary: "#8a8bc8"
+			}
+		},
+		content: {
+			icon: {
+				large: "24px",
+				medium: "20px",
+				small: "16px"
+			}
+		},
+		gap: {
+			content: "8px"
+		},
+		icononly: {
+			padding: {
+				horizontal: {
+					large: "12px",
+					medium: "10px",
+					small: "8px"
+				},
+				vertical: {
+					large: "12px",
+					medium: "10px",
+					small: "8px"
+				}
+			},
+			size: {
+				large: "48px",
+				medium: "40px",
+				small: "32px"
+			}
+		},
+		minHeight: {
+			large: "48px",
+			medium: "40px",
+			small: "32px"
+		},
+		padding: {
+			horizontal: {
+				large: "16px",
+				medium: "12px",
+				small: "8px"
+			},
+			vertical: {
+				large: "12px",
+				medium: "9px",
+				small: "7px"
+			}
+		}
+	},
+	card: {
+		color: {
+			background: "#171828"
+		},
+		product: {
+			basic: {
+				horizontal: "8px"
+			},
+			borderless: {
+				horizontal: "0px"
+			},
+			mini: {
+				horizontal: "8px"
+			},
+			padding: {
+				vertical: "8px"
+			}
+		}
+	},
+	carousel: {
+		control: {
+			borderWidth: "1px",
+			color: {
+				background: "#2f3046",
+				border: "#676767"
+			}
+		}
+	},
+	checkbox: {
+		borderRadius: {
+			"default": "1px"
+		},
+		borderWidth: {
+			active: "2px",
+			normal: "1px"
+		},
+		color: {
+			background: {
+				"active-disable": "#222337",
+				"active-hover": "#3d3f56",
+				"active-normal": "#292A3F",
+				"active-pressed": "#2f3046",
+				"inactive-disable": "#222337",
+				"inactive-hover": "#3d3f56",
+				"inactive-normal": "#292A3F",
+				"inactive-pressed": "#2f3046"
+			},
+			border: {
+				"active-disable": "#434343",
+				"active-hover": "#ffffff",
+				"active-normal": "#ffffff",
+				"active-pressed": "#ffffff",
+				"inactive-disable": "#434343",
+				"inactive-hover": "#676767",
+				"inactive-normal": "#676767",
+				"inactive-pressed": "#676767"
+			},
+			content: {
+				disable: "#555555",
+				normal: "#ececec"
+			},
+			mark: {
+				"active-normal": "#ffffff",
+				disable: "#555555"
+			}
+		}
+	},
+	input: {
+		assist: {
+			padding: {
+				bottom: "4px",
+				left: "12px",
+				right: "0px",
+				top: "2px"
+			}
+		},
+		background: {
+			"default": "#2f3046",
+			hover: "#3d3f56"
+		},
+		basic: {
+			height: {
+				large: "48px",
+				medium: "40px",
+				small: "32px"
+			},
+			padding: {
+				horizontal: {
+					large: "16px",
+					medium: "12px",
+					small: "8px"
+				}
+			}
+		},
+		borderRadius: {
+			bottom: "0px",
+			top: "1px"
+		},
+		borderWidth: {
+			"default": "1px",
+			focus: "2px"
+		},
+		inline: {
+			height: "48px",
+			padding: {
+				horizontal: "12px"
+			}
+		}
+	},
+	menu: {
+		borderRadius: {
+			container: "1px",
+			item: "1px"
+		},
+		gap: {
+			content: "8px"
+		},
+		padding: {
+			container: "4px",
+			content: "8px"
+		}
+	},
+	radio: {
+		borderRadius: {
+			"default": "1px"
+		},
+		borderWidth: {
+			active: "2px",
+			normal: "1px"
+		},
+		color: {
+			background: {
+				"active-disable": "#222337",
+				"active-hover": "#3d3f56",
+				"active-normal": "#292A3F",
+				"active-pressed": "#2f3046",
+				"inactive-disable": "#222337",
+				"inactive-hover": "#3d3f56",
+				"inactive-normal": "#292A3F",
+				"inactive-pressed": "#2f3046"
+			},
+			border: {
+				"active-disable": "#434343",
+				"active-hover": "#ffffff",
+				"active-normal": "#ffffff",
+				"active-pressed": "#ffffff",
+				"inactive-disable": "#434343",
+				"inactive-hover": "#676767",
+				"inactive-normal": "#676767",
+				"inactive-pressed": "#676767"
+			},
+			content: {
+				disable: "#555555",
+				normal: "#ececec"
+			},
+			mark: {
+				"active-normal": "#ffffff",
+				disable: "#555555"
+			}
+		}
+	},
+	"switch": {
+		borderRadius: {
+			"default": "1px",
+			knob: "1px"
+		},
+		borderWidth: {
+			"default": "1px"
+		},
+		color: {
+			bg: {
+				"active-disable": "#000000",
+				"active-normal": "#ffffff",
+				"inactive-disable": "#222337",
+				"inactive-normal": "#2f3046"
+			},
+			border: {
+				"active-disable": "#434343",
+				"active-normal": "#ffffff",
+				"inactive-disable": "#434343",
+				"inactive-normal": "#676767"
+			},
+			content: {
+				"active-disable": "#ececec",
+				"active-normal": "#ececec",
+				"inactive-disable": "#ececec",
+				"inactive-normal": "#ececec"
+			},
+			knob: {
+				"active-disable": "#555555",
+				"active-normal": "#292A3F",
+				"inactive-disable": "#555555",
+				"inactive-normal": "#292A3F"
+			}
+		}
+	},
+	tag: {
+		borderRadius: {
+			"default": "1px"
+		}
+	}
+};
+var opacity$1 = {
+	overlay: {
+		"disable-dark": 0.47,
+		"disable-light": 0.53,
+		screen: 0.25
+	},
+	"static": {
+		border: 0.4,
+		"border-strong": 0.65,
+		disable: 0.13,
+		hover: 0.26,
+		pressed: 0.2,
+		subtle: 0.33
+	}
+};
+var padding$1 = {
+	lg: "12px",
+	md: "8px",
+	none: "0px",
+	sm: "6px",
+	xl: "16px",
+	xs: "4px",
+	xxl: "20px",
+	xxs: "2px"
+};
+var palette$1 = {
+	Blue: {
+		"100": "#c5dffe",
+		"200": "#a8cfff",
+		"300": "#85b0f4",
+		"400": "#5c8bdc",
+		"500": "#3268c4",
+		"600": "#2451b0",
+		"700": "#234195",
+		"800": "#253378",
+		"900": "#212b61",
+		"950": "#1e2852",
+		"025": "#eff5ff",
+		"050": "#e0eeff"
+	},
+	Bruno: {
+		"100": "#d5e0fe",
+		"200": "#b7ccff",
+		"300": "#8ab1ff",
+		"400": "#5c95f1",
+		"500": "#3472c8",
+		"600": "#24599f",
+		"700": "#1c4984",
+		"800": "#153a6a",
+		"900": "#122e56",
+		"950": "#102749",
+		"025": "#f1f4fb",
+		"050": "#e6ebf9"
+	},
+	Cindy: {
+		"100": "#fedae2",
+		"200": "#fdc0ce",
+		"300": "#fa93af",
+		"400": "#eb5086",
+		"500": "#cc1266",
+		"600": "#ac0054",
+		"700": "#891645",
+		"800": "#6a1937",
+		"900": "#541d2f",
+		"950": "#401c26",
+		"025": "#fff0f3",
+		"050": "#fbe6ea"
+	},
+	Green: {
+		"100": "#9af2be",
+		"200": "#6ce5a2",
+		"300": "#52cc85",
+		"400": "#46aa67",
+		"500": "#3d8c4e",
+		"600": "#35743f",
+		"700": "#326032",
+		"800": "#2b4f2a",
+		"900": "#204024",
+		"950": "#15341c",
+		"025": "#e2fbe8",
+		"050": "#cbf9d9"
+	},
+	Indigo: {
+		"100": "#d3dcff",
+		"200": "#bbcaff",
+		"300": "#97aafe",
+		"400": "#6c7fe9",
+		"500": "#4a58d1",
+		"600": "#4344bc",
+		"700": "#3c36a2",
+		"800": "#362d8a",
+		"900": "#33276c",
+		"950": "#312456",
+		"025": "#f3f5ff",
+		"050": "#e6ebfe"
+	},
+	Lazy: {
+		"100": "#c2e3ee",
+		"200": "#92d9ef",
+		"300": "#61c0db",
+		"400": "#3aa2bd",
+		"500": "#247e95",
+		"600": "#1c6375",
+		"700": "#174d5b",
+		"800": "#143e49",
+		"900": "#163139",
+		"950": "#16252a",
+		"025": "#edf5f8",
+		"050": "#dbeff5"
+	},
+	Lila: {
+		"100": "#fedadf",
+		"200": "#ffbcc6",
+		"300": "#fb9cac",
+		"400": "#e5758c",
+		"500": "#c54465",
+		"600": "#a6284e",
+		"700": "#86143a",
+		"800": "#69122d",
+		"900": "#571226",
+		"950": "#481321",
+		"025": "#ffeef0",
+		"050": "#fde5e8"
+	},
+	Lime: {
+		"100": "#d8ea88",
+		"200": "#bed954",
+		"300": "#a2c132",
+		"400": "#83a41f",
+		"500": "#6b8b1e",
+		"600": "#54751b",
+		"700": "#436119",
+		"800": "#354e13",
+		"900": "#2c3f0f",
+		"950": "#24320a",
+		"025": "#f4f8e1",
+		"050": "#eaf3bb"
+	},
+	"Mulled Wine": {
+		"100": "#b7b7c4",
+		"200": "#9c9dae",
+		"300": "#7d7f94",
+		"400": "#5d5e76",
+		"500": "#4c4e66",
+		"600": "#3d3f56",
+		"700": "#2f3046",
+		"800": "#222337",
+		"900": "#171828",
+		"999": "#0d0e19",
+		"000": "#ffffff",
+		"010": "#fafafb",
+		"020": "#f3f3f6",
+		"030": "#eaeaee",
+		"040": "#dddde4",
+		"050": "#cccdd6"
+	},
+	Neutral: {
+		"100": "#bebebe",
+		"200": "#a5a5a5",
+		"300": "#888888",
+		"400": "#676767",
+		"500": "#555555",
+		"600": "#434343",
+		"700": "#323232",
+		"800": "#212121",
+		"900": "#101010",
+		"999": "#000000",
+		"000": "#ffffff",
+		"010": "#fbfbfb",
+		"020": "#f5f5f5",
+		"030": "#ececec",
+		"040": "#e0e0e0",
+		"050": "#d1d1d1"
+	},
+	Nitro: {
+		"100": "#deddff",
+		"200": "#cbcaf6",
+		"300": "#adade2",
+		"400": "#8a8bc8",
+		"500": "#6065ae",
+		"600": "#444e9c",
+		"700": "#2e3c88",
+		"800": "#27326f",
+		"900": "#252a57",
+		"950": "#232442",
+		"025": "#f6f5ff",
+		"050": "#eae9ff"
+	},
+	Orange: {
+		"100": "#fed7b8",
+		"200": "#fdbe8d",
+		"300": "#f5984c",
+		"400": "#de7823",
+		"500": "#bd5904",
+		"600": "#a24604",
+		"700": "#863508",
+		"800": "#712b0e",
+		"900": "#5f2611",
+		"950": "#4e1e0b",
+		"025": "#fff4ec",
+		"050": "#fde9da"
+	},
+	Pink: {
+		"100": "#ffd0f5",
+		"200": "#ffb5ee",
+		"300": "#f588d6",
+		"400": "#de56af",
+		"500": "#bc2f86",
+		"600": "#a01868",
+		"700": "#881354",
+		"800": "#701445",
+		"900": "#5b1538",
+		"950": "#4d192e",
+		"025": "#fff2fc",
+		"050": "#ffe6f9"
+	},
+	Poppy: {
+		"100": "#feccd1",
+		"200": "#ffb9c2",
+		"300": "#ff91a3",
+		"400": "#f36281",
+		"500": "#d43863",
+		"600": "#b11b4b",
+		"700": "#8b163a",
+		"800": "#6a112c",
+		"900": "#571124",
+		"950": "#49111f",
+		"025": "#fff0f2",
+		"050": "#ffdfe2"
+	},
+	Prima: {
+		"100": "#f9e16f",
+		"200": "#e9d049",
+		"300": "#d1ba37",
+		"400": "#b8a434",
+		"500": "#9b8a31",
+		"600": "#7b6d29",
+		"700": "#615728",
+		"800": "#473f1a",
+		"900": "#383216",
+		"950": "#2f2b17",
+		"025": "#f8f2dd",
+		"050": "#ffedab"
+	},
+	Primary: {
+		"100": "#dfdfdf",
+		"200": "#cdcdcd",
+		"300": "#b2b2b2",
+		"400": "#8c8c8c",
+		"500": "#6d6d6d",
+		"600": "#555555",
+		"700": "#434343",
+		"800": "#333333",
+		"900": "#222222",
+		"950": "#000000",
+		"025": "#f3f3f3",
+		"050": "#ebebeb"
+	},
+	Purple: {
+		"100": "#f0d3fc",
+		"200": "#ebbaf9",
+		"300": "#dd94ea",
+		"400": "#c962d4",
+		"500": "#b130b3",
+		"600": "#960f97",
+		"700": "#810c80",
+		"800": "#6b0e69",
+		"900": "#581355",
+		"950": "#491945",
+		"025": "#fbf3ff",
+		"050": "#f8e8ff"
+	},
+	Red: {
+		"100": "#ffd3d4",
+		"200": "#ffb9ba",
+		"300": "#fc8e8e",
+		"400": "#ef5f5e",
+		"500": "#c5312f",
+		"600": "#a3201a",
+		"700": "#881a10",
+		"800": "#6f160d",
+		"900": "#5e170f",
+		"950": "#4d1513",
+		"025": "#fff2f2",
+		"050": "#ffe8e8"
+	},
+	Secondary: {
+		"100": "#deddff",
+		"200": "#cbcaf6",
+		"300": "#adade2",
+		"400": "#8a8bc8",
+		"500": "#6065ae",
+		"600": "#444e9c",
+		"700": "#2e3c88",
+		"800": "#27326f",
+		"900": "#252a57",
+		"950": "#232442",
+		"025": "#f6f5ff",
+		"050": "#eae9ff"
+	},
+	Sky: {
+		"100": "#a8e9f4",
+		"200": "#78daeb",
+		"300": "#4dbcd3",
+		"400": "#2d9bb3",
+		"500": "#0f7a94",
+		"600": "#14657f",
+		"700": "#1e566f",
+		"800": "#1f475d",
+		"900": "#193a4d",
+		"950": "#143041",
+		"025": "#e2faff",
+		"050": "#ccf5fc"
+	},
+	Snap: {
+		"100": "#c0e7ec",
+		"200": "#8edee9",
+		"300": "#7ac2cc",
+		"400": "#629fa7",
+		"500": "#4a7c82",
+		"600": "#376166",
+		"700": "#2c4f53",
+		"800": "#254246",
+		"900": "#1f3639",
+		"950": "#1a2c2f",
+		"025": "#e8f6f8",
+		"050": "#d5f0f4"
+	},
+	Social: {
+		Apple: "#000000",
+		Facebook: "#1877f2",
+		KingPower: "#0b56A4"
+	},
+	Teal: {
+		"100": "#9cf0de",
+		"200": "#62e1ca",
+		"300": "#3fc6af",
+		"400": "#2aa694",
+		"500": "#1e8878",
+		"600": "#1d6e61",
+		"700": "#1c5950",
+		"800": "#1c4841",
+		"900": "#1a3c38",
+		"950": "#14322f",
+		"025": "#dffbf3",
+		"050": "#c5f9ec"
+	},
+	Violet: {
+		"100": "#e2d8ff",
+		"200": "#d2c3ff",
+		"300": "#b7a0f8",
+		"400": "#9275e8",
+		"500": "#794ed2",
+		"600": "#6937be",
+		"700": "#6026a4",
+		"800": "#542087",
+		"900": "#46216a",
+		"950": "#392151",
+		"025": "#f6f3ff",
+		"050": "#f0eaff"
+	},
+	Wei: {
+		"100": "#e9dcf9",
+		"200": "#d9c5f4",
+		"300": "#c2a4ec",
+		"400": "#9f79d8",
+		"500": "#7f55ca",
+		"600": "#6639be",
+		"700": "#5229a7",
+		"800": "#412084",
+		"900": "#35196d",
+		"950": "#2c1658",
+		"025": "#f6f3f9",
+		"050": "#eee9f5"
+	},
+	Yellow: {
+		"100": "#fbde93",
+		"200": "#f3c95b",
+		"300": "#ddac29",
+		"400": "#c38f04",
+		"500": "#ab7506",
+		"600": "#936111",
+		"700": "#7d4f11",
+		"800": "#663e0f",
+		"900": "#52310d",
+		"950": "#422706",
+		"025": "#fef5e2",
+		"050": "#ffedc1"
+	}
+};
+var Shadow$1 = {
+	Below: {
+		md: "0px 8px 24px -4px #0000001f, 0px 0px 1px 0px #0000001f",
+		sm: "0px 4px 16px -4px #00000014, 0px 0px 1px 0px #0000001f",
+		xl: "0px 16px 32px -4px #00000029, 0px 0px 1px 0px #00000029",
+		xs: "0px 2px 4px -4px #0000000f, 0px 0px 1px 0px #0000001f"
+	}
+};
+var sizing$1 = {
+	compLG: "48px",
+	compMD: "40px",
+	compSM: "32px",
+	compXL: "56px",
+	compXS: "24px",
+	compXXS: "20px"
+};
+var State$1 = {
+	Focused: {
+		Default: "0px 0px 0px 2px #171828bf, 0px 0px 0px 4px #ffffff",
+		"Error": "0px 0px 0px 2px #171828bf, 0px 0px 0px 4px #881a10",
+		Primary: "0px 0px 0px 2px #171828bf, 0px 0px 0px 4px #434343"
+	}
+};
+var typography$1 = {
+	disp: {
+		"Display 1": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "58px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "82px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "58px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "82px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Display 2": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "52px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "72px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "52px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "72px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Display 3": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "46px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "64px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "46px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "64px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Display 4": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "41px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "58px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "41px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "58px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		}
+	},
+	Extra: {
+		Button: {
+			large: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "2%",
+				lineHeight: "24px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "uppercase"
+			},
+			medium: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "2%",
+				lineHeight: "22px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "uppercase"
+			},
+			small: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "2%",
+				lineHeight: "18px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "uppercase"
+			}
+		},
+		Price: {
+			large: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			"large-strike": {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "line-through",
+				textTransform: "none"
+			},
+			medium: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "16px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			"medium-strike": {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "16px",
+				paragraphSpacing: "0px",
+				textDecoration: "line-through",
+				textTransform: "none"
+			},
+			small: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			"small-strike": {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "line-through",
+				textTransform: "none"
+			}
+		}
+	},
+	head: {
+		"Headline 1": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "32px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "52px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "32px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "52px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 2": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "29px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "46px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "29px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "46px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 3": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "26px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "42px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "26px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "42px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 4": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "23px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "36px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "23px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "36px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 5": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "20px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "32px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "20px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "32px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		Overline: {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "12px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Title 1": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "18px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "28px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "18px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "28px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Title 2": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "16px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "26px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "26px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		}
+	},
+	text: {
+		"Body 1": {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "16px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "24px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "24px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Body 2": {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "14px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "22px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "22px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		Caption: {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "12px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "18px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "18px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		Tiny: {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "9px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "9px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		}
+	}
+};
+var darkThemeJson = {
+	_VariantGroup: _VariantGroup$1,
+	borderRadius: borderRadius$1,
+	borderWidth: borderWidth$1,
+	color: color$1,
+	comp: comp$1,
+	opacity: opacity$1,
+	padding: padding$1,
+	palette: palette$1,
+	Shadow: Shadow$1,
+	sizing: sizing$1,
+	State: State$1,
+	typography: typography$1
 };
 
-export { MyButton as Button, MyCard as Card, MyTextField as TextField, ThemeProvider as default };
+var _VariantGroup = "#9747ff";
+var borderRadius = {
+	lg: "1px",
+	max: "240px",
+	md: "1px",
+	sm: "1px",
+	xl: "1px",
+	xs: "1px"
+};
+var borderWidth = {
+	bold: "2px",
+	regular: "1px"
+};
+var color = {
+	Accent: {
+		Border: {
+			Blue: "#a8cfff",
+			Green: "#6ce5a2",
+			Indigo: "#bbcaff",
+			Lime: "#bed954",
+			Orange: "#fdbe8d",
+			Pink: "#ffb5ee",
+			Purple: "#ebbaf9",
+			Red: "#ffb9ba",
+			Sky: "#78daeb",
+			Teal: "#62e1ca",
+			Violet: "#d2c3ff",
+			Yellow: "#f3c95b"
+		},
+		Content: {
+			Blue: "#3268c4",
+			Green: "#3d8c4e",
+			Indigo: "#4a58d1",
+			Lime: "#6b8b1e",
+			Orange: "#bd5904",
+			Pink: "#bc2f86",
+			Purple: "#b130b3",
+			Red: "#c5312f",
+			Sky: "#0f7a94",
+			Teal: "#1e8878",
+			Violet: "#794ed2",
+			Yellow: "#ab7506"
+		},
+		Foreground: {
+			Blue: "#eff5ff",
+			Green: "#e2fbe8",
+			Indigo: "#f3f5ff",
+			Lime: "#f4f8e1",
+			Orange: "#fff4ec",
+			Pink: "#fff2fc",
+			Purple: "#fbf3ff",
+			Red: "#fff2f2",
+			Sky: "#e2faff",
+			Teal: "#dffbf3",
+			Violet: "#f6f3ff",
+			Yellow: "#fef5e2"
+		}
+	},
+	Base: {
+		Foreground: {
+			Disable: "#fafafb",
+			"Disable Overlay": "rgba(255, 255, 255, 0.53)",
+			"Elevated-0": "#ffffff",
+			"Elevated-4": "#ffffff",
+			"Elevated-8": "#ffffff",
+			"Elevated-16": "#ffffff",
+			Ground: "#ffffff",
+			"Ground Alt": "#fbfbfb",
+			Hover: "#f5f5f5",
+			Invert: "#000000",
+			Moderate: "#ececec",
+			Pressed: "#ececec",
+			"Screen Overlay": "rgba(0, 0, 0, 0.25)",
+			Subtle: "#f5f5f5",
+			Transparent: "rgba(0, 0, 0, 0)",
+			"Transparent Focused": "rgba(255, 255, 255, 0.01)"
+		}
+	},
+	Beauty: {
+		Border: {
+			Default: "#fdc0ce",
+			Strong: "#cc1266"
+		},
+		Content: {
+			Default: "#cc1266",
+			Hover: "#ac0054",
+			Pressed: "#891645"
+		},
+		Foreground: {
+			Default: "#cc1266",
+			Hover: "#ac0054",
+			"Muted Hover": "#fff0f3",
+			"Muted Pressed": "#fbe6ea",
+			Pressed: "#891645",
+			Subtle: "#fff0f3",
+			"Subtle Hover": "#fbe6ea",
+			"Subtle Pressed": "#fedae2"
+		}
+	},
+	Functional: {
+		Border: {
+			"Error": "#ffb9ba",
+			"Error Strong": "#c5312f"
+		},
+		Content: {
+			"Error": "#c5312f",
+			"Error Hover": "#a3201a",
+			"Error Pressed": "#881a10",
+			Info: "#3268c4",
+			Success: "#3d8c4e",
+			Warning: "#ab7506"
+		},
+		Foreground: {
+			"Error": "#c5312f",
+			"Error Hover": "#a3201a",
+			"Error Muted Hover": "#fff2f2",
+			"Error Muted Pressed": "#ffe8e8",
+			"Error Pressed": "#881a10",
+			"Error Subtle": "#fff2f2",
+			"Error Subtle Hover": "#ffe8e8",
+			"Error Subtle Pressed": "#ffd3d4",
+			Info: "#3268c4",
+			"Info Subtle": "#eff5ff",
+			Success: "#3d8c4e",
+			"Success Subtle": "#e2fbe8",
+			Warning: "#ab7506",
+			"Warning Subtle": "#fef5e2"
+		}
+	},
+	Lifestyle: {
+		Border: {
+			Default: "#b7ccff",
+			Strong: "#3472c8"
+		},
+		Content: {
+			Default: "#3472c8",
+			Hover: "#24599f",
+			Pressed: "#1c4984"
+		},
+		Foreground: {
+			Default: "#3472c8",
+			Hover: "#24599f",
+			"Muted Hover": "#f1f4fb",
+			"Muted Pressed": "#e6ebf9",
+			Pressed: "#1c4984",
+			Subtle: "#f1f4fb",
+			"Subtle Hover": "#e6ebf9",
+			"Subtle Pressed": "#d5e0fe"
+		}
+	},
+	"on-Accent": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	"on-Base": {
+		Border: {
+			Default: "#d1d1d1",
+			Disable: "#ececec"
+		},
+		Content: {
+			Disable: "#e0e0e0",
+			High: "#323232",
+			Invert: "#ffffff",
+			Low: "#bebebe",
+			Medium: "#676767"
+		}
+	},
+	"on-Beauty": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	"on-Functional": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	"on-Lifestyle": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	"on-Primary": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	"on-Secondary": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	"on-Static": {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)"
+		},
+		Content: {
+			Disable: "rgba(255, 255, 255, 0.33)",
+			High: "#ffffff",
+			Low: "rgba(255, 255, 255, 0.53)",
+			Medium: "rgba(255, 255, 255, 0.82)"
+		}
+	},
+	Primary: {
+		Border: {
+			Default: "#cdcdcd",
+			Strong: "#000000"
+		},
+		Content: {
+			Default: "#000000",
+			Hover: "#555555",
+			Pressed: "#434343"
+		},
+		Foreground: {
+			Default: "#000000",
+			Hover: "#333333",
+			"Muted Hover": "#f3f3f3",
+			"Muted Pressed": "#ebebeb",
+			Pressed: "#222222",
+			Subtle: "#f3f3f3",
+			"Subtle Hover": "#ebebeb",
+			"Subtle Pressed": "#dfdfdf"
+		}
+	},
+	Secondary: {
+		Border: {
+			Default: "#cbcaf6",
+			Strong: "#6065ae"
+		},
+		Content: {
+			Default: "#6065ae",
+			Hover: "#444e9c",
+			Pressed: "#2e3c88"
+		},
+		Foreground: {
+			Default: "#6065ae",
+			Hover: "#444e9c",
+			"Muted Hover": "#f6f5ff",
+			"Muted Pressed": "#eae9ff",
+			Pressed: "#2e3c88",
+			Subtle: "#f6f5ff",
+			"Subtle Hover": "#eae9ff",
+			"Subtle Pressed": "#deddff"
+		}
+	},
+	Social: {
+		"Border-AppleOutline-Default": "#000000",
+		"Border-KP-Default": "#0b56a4",
+		"Content-AppleBlack-Default": "#ffffff",
+		"Content-AppleWhite-Default": "#000000",
+		"Content-Facebook-Default": "#ffffff",
+		"Content-KP-Default": "#0b56a4",
+		"Foreground-AppleBlack-Default": "#000000",
+		"Foreground-AppleOutline-Default": "#ffffff",
+		"Foreground-AppleWhite-Default": "#ffffff",
+		"Foreground-Facebook-Default": "#1877f2",
+		"Foreground-KP-Default": "#0b56a4"
+	},
+	Static: {
+		Border: {
+			Default: "rgba(255, 255, 255, 0.4)",
+			Strong: "rgba(255, 255, 255, 0.65)"
+		},
+		Content: {
+			Default: "#ffffff"
+		},
+		Foreground: {
+			Disable: "rgba(255, 255, 255, 0.13)",
+			Subtle: "rgba(255, 255, 255, 0.33)",
+			"Subtle Hover": "rgba(255, 255, 255, 0.26)",
+			"Subtle Pressed": "rgba(255, 255, 255, 0.2)"
+		}
+	}
+};
+var comp = {
+	alert: {
+		borderRadius: {
+			"default": "1px"
+		},
+		padding: {
+			"default": "16px"
+		}
+	},
+	badge: {
+		borderRadius: {
+			"default": "0px"
+		},
+		gap: {
+			content: {
+				large: "8px",
+				medium: "6px",
+				small: "4px"
+			}
+		},
+		padding: {
+			horizontal: {
+				large: "8px",
+				medium: "6px",
+				small: "4px"
+			}
+		},
+		sem: {
+			color: {
+				"background-oos": "#888888",
+				"background-privilege": "#fef5e2",
+				"background-promotion": "#fff4ec",
+				"background-scarcity": "#dffbf3",
+				"background-social": "#eff5ff",
+				"background-special": "#000000",
+				"content-oos": "#ffffff",
+				"content-privilege": "#ab7506",
+				"content-promotion": "#bd5904",
+				"content-scarcity": "#1e8878",
+				"content-social": "#3268c4",
+				"content-special": "#ffffff"
+			}
+		},
+		size: {
+			height: {
+				large: "32px",
+				medium: "24px",
+				small: "20px"
+			}
+		}
+	},
+	btn: {
+		borderRadius: {
+			"default": "1px",
+			link: "0px"
+		},
+		borderWidth: {
+			"default": "1px",
+			ghost: "0px",
+			primary: "1px",
+			secondary: "1px",
+			tertiary: "0px"
+		},
+		color: {
+			background: {
+				"default-danger-hover": "#fff2f2",
+				"default-danger-normal": "#FFFFFF",
+				"default-danger-pressed": "#ffe8e8",
+				"default-hover": "#f5f5f5",
+				"default-normal": "#FFFFFF",
+				"default-pressed": "#ececec",
+				disable: "#fafafb",
+				"ghost-danger-disable": "#00000000",
+				"ghost-danger-hover": "#fff2f2",
+				"ghost-danger-normal": "#00000000",
+				"ghost-danger-press": "#ffe8e8",
+				"ghost-disable": "#00000000",
+				"ghost-hover": "#f5f5f5",
+				"ghost-normal": "#00000000",
+				"ghost-pressed": "#ececec",
+				link: "#00000000",
+				"primary-danger-hover": "#a3201a",
+				"primary-danger-normal": "#c5312f",
+				"primary-danger-pressed": "#881a10",
+				"primary-hover": "#333333",
+				"primary-normal": "#000000",
+				"primary-pressed": "#222222",
+				"secondary-danger-hover": "#ffe8e8",
+				"secondary-danger-normal": "#fff2f2",
+				"secondary-danger-pressed": "#ffd3d4",
+				"secondary-hover": "#eae9ff",
+				"secondary-normal": "#f6f5ff",
+				"secondary-pressed": "#deddff",
+				"tertiary-danger-hover": "#fff2f2",
+				"tertiary-danger-normal": "#00000000",
+				"tertiary-danger-pressed": "#ffe8e8",
+				"tertiary-disable": "#00000000",
+				"tertiary-hover": "#f6f5ff",
+				"tertiary-normal": "#00000000",
+				"tertiary-pressed": "#eae9ff"
+			},
+			border: {
+				"default": "#d1d1d1",
+				"default-hover": "#d1d1d1",
+				"default-pressed": "#d1d1d1",
+				disable: "#ececec",
+				ghost: "#00000000",
+				"ghost-disable": "#00000000",
+				"ghost-hover": "#00000000",
+				"ghost-pressed": "#00000000",
+				primary: "#000000",
+				"primary-hover": "#000000",
+				"primary-pressed": "#000000",
+				secondary: "#cbcaf6",
+				"secondary-hover": "#cbcaf6",
+				"secondary-pressed": "#cbcaf6",
+				tertiary: "#00000000",
+				"tertiary-disable": "#00000000",
+				"tertiary-hover": "#00000000",
+				"tertiary-pressed": "#00000000"
+			},
+			content: {
+				"default": "#323232",
+				disable: "#e0e0e0",
+				ghost: "#323232",
+				"link-hover": "#444e9c",
+				"link-normal": "#6065ae",
+				"link-pressed": "#2e3c88",
+				"primary-hover": "#ffffff",
+				"primary-normal": "#ffffff",
+				"primary-pressed": "#ffffff",
+				"secondary-hover": "#444e9c",
+				"secondary-normal": "#6065ae",
+				"secondary-pressed": "#2e3c88",
+				tertiary: "#6065ae"
+			}
+		},
+		content: {
+			icon: {
+				large: "24px",
+				medium: "20px",
+				small: "16px"
+			}
+		},
+		gap: {
+			content: "8px"
+		},
+		icononly: {
+			padding: {
+				horizontal: {
+					large: "12px",
+					medium: "10px",
+					small: "8px"
+				},
+				vertical: {
+					large: "12px",
+					medium: "10px",
+					small: "8px"
+				}
+			},
+			size: {
+				large: "48px",
+				medium: "40px",
+				small: "32px"
+			}
+		},
+		minHeight: {
+			large: "48px",
+			medium: "40px",
+			small: "32px"
+		},
+		padding: {
+			horizontal: {
+				large: "16px",
+				medium: "12px",
+				small: "8px"
+			},
+			vertical: {
+				large: "12px",
+				medium: "9px",
+				small: "7px"
+			}
+		}
+	},
+	card: {
+		color: {
+			background: "#ffffff"
+		},
+		product: {
+			basic: {
+				horizontal: "8px"
+			},
+			borderless: {
+				horizontal: "0px"
+			},
+			mini: {
+				horizontal: "8px"
+			},
+			padding: {
+				vertical: "8px"
+			}
+		}
+	},
+	carousel: {
+		control: {
+			borderWidth: "1px",
+			color: {
+				background: "#f5f5f5",
+				border: "#d1d1d1"
+			}
+		}
+	},
+	checkbox: {
+		borderRadius: {
+			"default": "1px"
+		},
+		borderWidth: {
+			active: "2px",
+			normal: "1px"
+		},
+		color: {
+			background: {
+				"active-disable": "#fafafb",
+				"active-hover": "#f5f5f5",
+				"active-normal": "#FFFFFF",
+				"active-pressed": "#ececec",
+				"inactive-disable": "#fafafb",
+				"inactive-hover": "#f5f5f5",
+				"inactive-normal": "#FFFFFF",
+				"inactive-pressed": "#ececec"
+			},
+			border: {
+				"active-disable": "#ececec",
+				"active-hover": "#000000",
+				"active-normal": "#000000",
+				"active-pressed": "#000000",
+				"inactive-disable": "#ececec",
+				"inactive-hover": "#d1d1d1",
+				"inactive-normal": "#d1d1d1",
+				"inactive-pressed": "#d1d1d1"
+			},
+			content: {
+				disable: "#e0e0e0",
+				normal: "#323232"
+			},
+			mark: {
+				"active-normal": "#000000",
+				disable: "#e0e0e0"
+			}
+		}
+	},
+	input: {
+		assist: {
+			padding: {
+				bottom: "4px",
+				left: "12px",
+				right: "0px",
+				top: "2px"
+			}
+		},
+		background: {
+			"default": "#f5f5f5",
+			hover: "#ececec"
+		},
+		basic: {
+			height: {
+				large: "48px",
+				medium: "40px",
+				small: "32px"
+			},
+			padding: {
+				horizontal: {
+					large: "16px",
+					medium: "12px",
+					small: "8px"
+				}
+			}
+		},
+		borderRadius: {
+			bottom: "0px",
+			top: "1px"
+		},
+		borderWidth: {
+			"default": "1px",
+			focus: "2px"
+		},
+		inline: {
+			height: "48px",
+			padding: {
+				horizontal: "12px"
+			}
+		}
+	},
+	menu: {
+		borderRadius: {
+			container: "1px",
+			item: "1px"
+		},
+		gap: {
+			content: "8px"
+		},
+		padding: {
+			container: "4px",
+			content: "8px"
+		}
+	},
+	radio: {
+		borderRadius: {
+			"default": "1px"
+		},
+		borderWidth: {
+			active: "2px",
+			normal: "1px"
+		},
+		color: {
+			background: {
+				"active-disable": "#fafafb",
+				"active-hover": "#f5f5f5",
+				"active-normal": "#FFFFFF",
+				"active-pressed": "#ececec",
+				"inactive-disable": "#fafafb",
+				"inactive-hover": "#f5f5f5",
+				"inactive-normal": "#FFFFFF",
+				"inactive-pressed": "#ececec"
+			},
+			border: {
+				"active-disable": "#ececec",
+				"active-hover": "#000000",
+				"active-normal": "#000000",
+				"active-pressed": "#000000",
+				"inactive-disable": "#ececec",
+				"inactive-hover": "#d1d1d1",
+				"inactive-normal": "#d1d1d1",
+				"inactive-pressed": "#d1d1d1"
+			},
+			content: {
+				disable: "#e0e0e0",
+				normal: "#323232"
+			},
+			mark: {
+				"active-normal": "#000000",
+				disable: "#e0e0e0"
+			}
+		}
+	},
+	"switch": {
+		borderRadius: {
+			"default": "1px",
+			knob: "1px"
+		},
+		borderWidth: {
+			"default": "1px"
+		},
+		color: {
+			bg: {
+				"active-disable": "#f3f3f3",
+				"active-normal": "#000000",
+				"inactive-disable": "#fafafb",
+				"inactive-normal": "#f5f5f5"
+			},
+			border: {
+				"active-disable": "#ececec",
+				"active-normal": "#000000",
+				"inactive-disable": "#ececec",
+				"inactive-normal": "#d1d1d1"
+			},
+			content: {
+				"active-disable": "#323232",
+				"active-normal": "#323232",
+				"inactive-disable": "#323232",
+				"inactive-normal": "#323232"
+			},
+			knob: {
+				"active-disable": "#e0e0e0",
+				"active-normal": "#FFFFFF",
+				"inactive-disable": "#e0e0e0",
+				"inactive-normal": "#FFFFFF"
+			}
+		}
+	},
+	tag: {
+		borderRadius: {
+			"default": "1px"
+		}
+	}
+};
+var opacity = {
+	overlay: {
+		"disable-dark": 0.47,
+		"disable-light": 0.53,
+		screen: 0.25
+	},
+	"static": {
+		border: 0.4,
+		"border-strong": 0.65,
+		disable: 0.13,
+		hover: 0.26,
+		pressed: 0.2,
+		subtle: 0.33
+	}
+};
+var padding = {
+	lg: "12px",
+	md: "8px",
+	none: "0px",
+	sm: "6px",
+	xl: "16px",
+	xs: "4px",
+	xxl: "20px",
+	xxs: "2px"
+};
+var palette = {
+	Blue: {
+		"100": "#c5dffe",
+		"200": "#a8cfff",
+		"300": "#85b0f4",
+		"400": "#5c8bdc",
+		"500": "#3268c4",
+		"600": "#2451b0",
+		"700": "#234195",
+		"800": "#253378",
+		"900": "#212b61",
+		"950": "#1e2852",
+		"025": "#eff5ff",
+		"050": "#e0eeff"
+	},
+	Bruno: {
+		"100": "#d5e0fe",
+		"200": "#b7ccff",
+		"300": "#8ab1ff",
+		"400": "#5c95f1",
+		"500": "#3472c8",
+		"600": "#24599f",
+		"700": "#1c4984",
+		"800": "#153a6a",
+		"900": "#122e56",
+		"950": "#102749",
+		"025": "#f1f4fb",
+		"050": "#e6ebf9"
+	},
+	Cindy: {
+		"100": "#fedae2",
+		"200": "#fdc0ce",
+		"300": "#fa93af",
+		"400": "#eb5086",
+		"500": "#cc1266",
+		"600": "#ac0054",
+		"700": "#891645",
+		"800": "#6a1937",
+		"900": "#541d2f",
+		"950": "#401c26",
+		"025": "#fff0f3",
+		"050": "#fbe6ea"
+	},
+	Green: {
+		"100": "#9af2be",
+		"200": "#6ce5a2",
+		"300": "#52cc85",
+		"400": "#46aa67",
+		"500": "#3d8c4e",
+		"600": "#35743f",
+		"700": "#326032",
+		"800": "#2b4f2a",
+		"900": "#204024",
+		"950": "#15341c",
+		"025": "#e2fbe8",
+		"050": "#cbf9d9"
+	},
+	Indigo: {
+		"100": "#d3dcff",
+		"200": "#bbcaff",
+		"300": "#97aafe",
+		"400": "#6c7fe9",
+		"500": "#4a58d1",
+		"600": "#4344bc",
+		"700": "#3c36a2",
+		"800": "#362d8a",
+		"900": "#33276c",
+		"950": "#312456",
+		"025": "#f3f5ff",
+		"050": "#e6ebfe"
+	},
+	Lazy: {
+		"100": "#c2e3ee",
+		"200": "#92d9ef",
+		"300": "#61c0db",
+		"400": "#3aa2bd",
+		"500": "#247e95",
+		"600": "#1c6375",
+		"700": "#174d5b",
+		"800": "#143e49",
+		"900": "#163139",
+		"950": "#16252a",
+		"025": "#edf5f8",
+		"050": "#dbeff5"
+	},
+	Lila: {
+		"100": "#fedadf",
+		"200": "#ffbcc6",
+		"300": "#fb9cac",
+		"400": "#e5758c",
+		"500": "#c54465",
+		"600": "#a6284e",
+		"700": "#86143a",
+		"800": "#69122d",
+		"900": "#571226",
+		"950": "#481321",
+		"025": "#ffeef0",
+		"050": "#fde5e8"
+	},
+	Lime: {
+		"100": "#d8ea88",
+		"200": "#bed954",
+		"300": "#a2c132",
+		"400": "#83a41f",
+		"500": "#6b8b1e",
+		"600": "#54751b",
+		"700": "#436119",
+		"800": "#354e13",
+		"900": "#2c3f0f",
+		"950": "#24320a",
+		"025": "#f4f8e1",
+		"050": "#eaf3bb"
+	},
+	"Mulled Wine": {
+		"100": "#b7b7c4",
+		"200": "#9c9dae",
+		"300": "#7d7f94",
+		"400": "#5d5e76",
+		"500": "#4c4e66",
+		"600": "#3d3f56",
+		"700": "#2f3046",
+		"800": "#222337",
+		"900": "#171828",
+		"999": "#0d0e19",
+		"000": "#ffffff",
+		"010": "#fafafb",
+		"020": "#f3f3f6",
+		"030": "#eaeaee",
+		"040": "#dddde4",
+		"050": "#cccdd6"
+	},
+	Neutral: {
+		"100": "#bebebe",
+		"200": "#a5a5a5",
+		"300": "#888888",
+		"400": "#676767",
+		"500": "#555555",
+		"600": "#434343",
+		"700": "#323232",
+		"800": "#212121",
+		"900": "#101010",
+		"999": "#000000",
+		"000": "#ffffff",
+		"010": "#fbfbfb",
+		"020": "#f5f5f5",
+		"030": "#ececec",
+		"040": "#e0e0e0",
+		"050": "#d1d1d1"
+	},
+	Nitro: {
+		"100": "#deddff",
+		"200": "#cbcaf6",
+		"300": "#adade2",
+		"400": "#8a8bc8",
+		"500": "#6065ae",
+		"600": "#444e9c",
+		"700": "#2e3c88",
+		"800": "#27326f",
+		"900": "#252a57",
+		"950": "#232442",
+		"025": "#f6f5ff",
+		"050": "#eae9ff"
+	},
+	Orange: {
+		"100": "#fed7b8",
+		"200": "#fdbe8d",
+		"300": "#f5984c",
+		"400": "#de7823",
+		"500": "#bd5904",
+		"600": "#a24604",
+		"700": "#863508",
+		"800": "#712b0e",
+		"900": "#5f2611",
+		"950": "#4e1e0b",
+		"025": "#fff4ec",
+		"050": "#fde9da"
+	},
+	Pink: {
+		"100": "#ffd0f5",
+		"200": "#ffb5ee",
+		"300": "#f588d6",
+		"400": "#de56af",
+		"500": "#bc2f86",
+		"600": "#a01868",
+		"700": "#881354",
+		"800": "#701445",
+		"900": "#5b1538",
+		"950": "#4d192e",
+		"025": "#fff2fc",
+		"050": "#ffe6f9"
+	},
+	Poppy: {
+		"100": "#feccd1",
+		"200": "#ffb9c2",
+		"300": "#ff91a3",
+		"400": "#f36281",
+		"500": "#d43863",
+		"600": "#b11b4b",
+		"700": "#8b163a",
+		"800": "#6a112c",
+		"900": "#571124",
+		"950": "#49111f",
+		"025": "#fff0f2",
+		"050": "#ffdfe2"
+	},
+	Prima: {
+		"100": "#f9e16f",
+		"200": "#e9d049",
+		"300": "#d1ba37",
+		"400": "#b8a434",
+		"500": "#9b8a31",
+		"600": "#7b6d29",
+		"700": "#615728",
+		"800": "#473f1a",
+		"900": "#383216",
+		"950": "#2f2b17",
+		"025": "#f8f2dd",
+		"050": "#ffedab"
+	},
+	Primary: {
+		"100": "#dfdfdf",
+		"200": "#cdcdcd",
+		"300": "#b2b2b2",
+		"400": "#8c8c8c",
+		"500": "#6d6d6d",
+		"600": "#555555",
+		"700": "#434343",
+		"800": "#333333",
+		"900": "#222222",
+		"950": "#000000",
+		"025": "#f3f3f3",
+		"050": "#ebebeb"
+	},
+	Purple: {
+		"100": "#f0d3fc",
+		"200": "#ebbaf9",
+		"300": "#dd94ea",
+		"400": "#c962d4",
+		"500": "#b130b3",
+		"600": "#960f97",
+		"700": "#810c80",
+		"800": "#6b0e69",
+		"900": "#581355",
+		"950": "#491945",
+		"025": "#fbf3ff",
+		"050": "#f8e8ff"
+	},
+	Red: {
+		"100": "#ffd3d4",
+		"200": "#ffb9ba",
+		"300": "#fc8e8e",
+		"400": "#ef5f5e",
+		"500": "#c5312f",
+		"600": "#a3201a",
+		"700": "#881a10",
+		"800": "#6f160d",
+		"900": "#5e170f",
+		"950": "#4d1513",
+		"025": "#fff2f2",
+		"050": "#ffe8e8"
+	},
+	Secondary: {
+		"100": "#deddff",
+		"200": "#cbcaf6",
+		"300": "#adade2",
+		"400": "#8a8bc8",
+		"500": "#6065ae",
+		"600": "#444e9c",
+		"700": "#2e3c88",
+		"800": "#27326f",
+		"900": "#252a57",
+		"950": "#232442",
+		"025": "#f6f5ff",
+		"050": "#eae9ff"
+	},
+	Sky: {
+		"100": "#a8e9f4",
+		"200": "#78daeb",
+		"300": "#4dbcd3",
+		"400": "#2d9bb3",
+		"500": "#0f7a94",
+		"600": "#14657f",
+		"700": "#1e566f",
+		"800": "#1f475d",
+		"900": "#193a4d",
+		"950": "#143041",
+		"025": "#e2faff",
+		"050": "#ccf5fc"
+	},
+	Snap: {
+		"100": "#c0e7ec",
+		"200": "#8edee9",
+		"300": "#7ac2cc",
+		"400": "#629fa7",
+		"500": "#4a7c82",
+		"600": "#376166",
+		"700": "#2c4f53",
+		"800": "#254246",
+		"900": "#1f3639",
+		"950": "#1a2c2f",
+		"025": "#e8f6f8",
+		"050": "#d5f0f4"
+	},
+	Social: {
+		Apple: "#000000",
+		Facebook: "#1877f2",
+		KingPower: "#0b56A4"
+	},
+	Teal: {
+		"100": "#9cf0de",
+		"200": "#62e1ca",
+		"300": "#3fc6af",
+		"400": "#2aa694",
+		"500": "#1e8878",
+		"600": "#1d6e61",
+		"700": "#1c5950",
+		"800": "#1c4841",
+		"900": "#1a3c38",
+		"950": "#14322f",
+		"025": "#dffbf3",
+		"050": "#c5f9ec"
+	},
+	Violet: {
+		"100": "#e2d8ff",
+		"200": "#d2c3ff",
+		"300": "#b7a0f8",
+		"400": "#9275e8",
+		"500": "#794ed2",
+		"600": "#6937be",
+		"700": "#6026a4",
+		"800": "#542087",
+		"900": "#46216a",
+		"950": "#392151",
+		"025": "#f6f3ff",
+		"050": "#f0eaff"
+	},
+	Wei: {
+		"100": "#e9dcf9",
+		"200": "#d9c5f4",
+		"300": "#c2a4ec",
+		"400": "#9f79d8",
+		"500": "#7f55ca",
+		"600": "#6639be",
+		"700": "#5229a7",
+		"800": "#412084",
+		"900": "#35196d",
+		"950": "#2c1658",
+		"025": "#f6f3f9",
+		"050": "#eee9f5"
+	},
+	Yellow: {
+		"100": "#fbde93",
+		"200": "#f3c95b",
+		"300": "#ddac29",
+		"400": "#c38f04",
+		"500": "#ab7506",
+		"600": "#936111",
+		"700": "#7d4f11",
+		"800": "#663e0f",
+		"900": "#52310d",
+		"950": "#422706",
+		"025": "#fef5e2",
+		"050": "#ffedc1"
+	}
+};
+var Shadow = {
+	Below: {
+		md: "0px 8px 24px -4px #0000001f, 0px 0px 1px 0px #0000001f",
+		sm: "0px 4px 16px -4px #00000014, 0px 0px 1px 0px #0000001f",
+		xl: "0px 16px 32px -4px #00000029, 0px 0px 1px 0px #00000029",
+		xs: "0px 2px 4px -4px #0000000f, 0px 0px 1px 0px #0000001f"
+	}
+};
+var sizing = {
+	compLG: "48px",
+	compMD: "40px",
+	compSM: "32px",
+	compXL: "56px",
+	compXS: "24px",
+	compXXS: "20px"
+};
+var State = {
+	Focused: {
+		Default: "0px 0px 0px 2px #ffffffbf, 0px 0px 0px 4px #000000",
+		"Error": "0px 0px 0px 2px #ffffffbf, 0px 0px 0px 4px #ffb9ba",
+		Primary: "0px 0px 0px 2px #ffffffbf, 0px 0px 0px 4px #cdcdcd"
+	}
+};
+var typography = {
+	disp: {
+		"Display 1": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "58px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "82px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "58px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "82px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Display 2": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "52px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "72px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "52px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "72px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Display 3": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "46px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "64px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "46px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "64px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Display 4": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "41px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "58px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "41px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "58px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		}
+	},
+	Extra: {
+		Button: {
+			large: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "2%",
+				lineHeight: "24px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "uppercase"
+			},
+			medium: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "2%",
+				lineHeight: "22px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "uppercase"
+			},
+			small: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "2%",
+				lineHeight: "18px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "uppercase"
+			}
+		},
+		Price: {
+			large: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			"large-strike": {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "line-through",
+				textTransform: "none"
+			},
+			medium: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "16px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			"medium-strike": {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "16px",
+				paragraphSpacing: "0px",
+				textDecoration: "line-through",
+				textTransform: "none"
+			},
+			small: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			"small-strike": {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0px",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "line-through",
+				textTransform: "none"
+			}
+		}
+	},
+	head: {
+		"Headline 1": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "32px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "52px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "32px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "52px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 2": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "29px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "46px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "29px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "46px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 3": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "26px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "42px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "26px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "42px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 4": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "23px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "36px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "23px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "36px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Headline 5": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "20px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "32px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "20px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "32px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		Overline: {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "12px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "20px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Title 1": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "18px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "28px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "18px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "28px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Title 2": {
+			normal: {
+				fontFamily: "FIRSTER Headline Regular",
+				fontSize: "16px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "26px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "FIRSTER Headline Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "26px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		}
+	},
+	text: {
+		"Body 1": {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "16px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "24px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "16px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "24px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		"Body 2": {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "14px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "22px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "14px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "22px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		Caption: {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "12px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "18px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "12px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "18px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		},
+		Tiny: {
+			normal: {
+				fontFamily: "King Power Text Regular",
+				fontSize: "9px",
+				fontWeight: 400,
+				letterSpacing: "0%",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			},
+			strong: {
+				fontFamily: "King Power Text Bold",
+				fontSize: "9px",
+				fontWeight: 700,
+				letterSpacing: "0%",
+				lineHeight: "14px",
+				paragraphSpacing: "0px",
+				textDecoration: "none",
+				textTransform: "none"
+			}
+		}
+	}
+};
+var lightThemeJson = {
+	_VariantGroup: _VariantGroup,
+	borderRadius: borderRadius,
+	borderWidth: borderWidth,
+	color: color,
+	comp: comp,
+	opacity: opacity,
+	padding: padding,
+	palette: palette,
+	Shadow: Shadow,
+	sizing: sizing,
+	State: State,
+	typography: typography
+};
+
+createTheme({
+    ...lightThemeJson,
+});
+createTheme({
+    ...darkThemeJson,
+});
+const themes = {
+    light: lightThemeJson,
+    dark: darkThemeJson,
+};
+const ThemeContext = reactExports.createContext({
+    toggleTheme: () => { },
+    setTheme: () => { },
+    theme: createTheme(lightThemeJson), // Default theme
+    themeName: 'light',
+});
+const useTheme = () => reactExports.useContext(ThemeContext);
+const ThemeProvider = ({ children }) => {
+    const [themeName, setThemeName] = reactExports.useState('light');
+    const theme = reactExports.useMemo(() => createTheme(themes[themeName]), [themeName]);
+    const toggleTheme = () => {
+        setThemeName((prev) => (prev === 'light' ? 'dark' : 'light'));
+    };
+    const setTheme = (name) => {
+        setThemeName(name);
+    };
+    return (jsxRuntimeExports.jsx(ThemeContext.Provider, { value: { toggleTheme, setTheme, theme, themeName }, children: jsxRuntimeExports.jsx(ThemeProvider$1, { theme: theme, children: children }) }));
+};
+
+export { MyButton as Button, Card, MyTextField as TextField, ThemeProvider, ThemeProvider as default, useTheme };
 //# sourceMappingURL=index.js.map

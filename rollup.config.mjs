@@ -2,20 +2,20 @@ import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import dts from 'rollup-plugin-dts'
-
-import packageJson from './package.json' assert { type: 'json' }
+import json from '@rollup/plugin-json'
+import copy from 'rollup-plugin-copy'
 
 export default [
   {
     input: 'src/index.ts',
     output: [
       {
-        file: packageJson.main,
+        file: 'dist/cjs/index.js',
         format: 'cjs',
         sourcemap: true,
       },
       {
-        file: packageJson.module,
+        file: 'dist/esm/index.js',
         format: 'esm',
         sourcemap: true,
       },
@@ -23,6 +23,14 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
+      json(),
+      copy({
+        targets: [
+          { src: 'src/theme/*.json', dest: 'dist/esm/types' },
+          { src: 'src/theme/*..json', dest: 'dist/cjs/types' },
+        ],
+        flatten: false,
+      }),
       typescript({ tsconfig: './tsconfig.json' }),
     ],
   },
@@ -34,6 +42,6 @@ export default [
         format: 'esm',
       },
     ],
-    plugins: [dts()],
+    plugins: [dts(), json()],
   },
 ]

@@ -1,7 +1,7 @@
-import { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 interface MyCardProps {
     children: ReactNode;
     actions?: ReactNode;
 }
-declare const MyCard: FC<MyCardProps>;
-export default MyCard;
+declare const Card: React.FC<MyCardProps>;
+export default Card;

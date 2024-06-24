@@ -1,5 +1,5 @@
-import React, { FC, ReactNode } from 'react'
-import Card from '@mui/material/Card'
+import React, { ReactNode } from 'react'
+import MuiCard from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 
@@ -8,13 +8,13 @@ interface MyCardProps {
   actions?: ReactNode
 }
 
-const MyCard: FC<MyCardProps> = ({ children, actions }) => {
+const Card: React.FC<MyCardProps> = ({ children, actions }) => {
   return (
-    <Card>
+    <MuiCard>
       <CardContent>{children}</CardContent>
       {actions && <CardActions>{actions}</CardActions>}
-    </Card>
+    </MuiCard>
   )
 }
 
-export default MyCard
+export default Card
