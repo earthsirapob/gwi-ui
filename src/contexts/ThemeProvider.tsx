@@ -13,8 +13,8 @@ import {
   Theme,
 } from '@mui/material/styles'
 
-import darkThemeJson from './theme/default-dark.json'
-import lightThemeJson from './theme/default-light.json'
+import darkThemeJson from '../theme/default-dark.json'
+import lightThemeJson from '../theme/default-light.json'
 
 type DesignThemeTypes = Partial<typeof lightThemeJson>
 

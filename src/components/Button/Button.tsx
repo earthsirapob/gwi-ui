@@ -1,10 +1,9 @@
 import React, { FC } from 'react'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 
-interface MyButtonProps {
+interface MyButtonProps extends ButtonProps {
   children: React.ReactNode
   onClick?: () => void
-  [key: string]: any
 }
 
 const MyButton: FC<MyButtonProps> = ({ children, ...props }) => {

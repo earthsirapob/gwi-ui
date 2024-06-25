@@ -1,10 +1,10 @@
 import React, { FC, ReactNode } from 'react';
+import { ButtonProps } from '@mui/material/Button';
 import { Theme } from '@mui/material/styles';
 
-interface MyButtonProps {
+interface MyButtonProps extends ButtonProps {
     children: React.ReactNode;
     onClick?: () => void;
-    [key: string]: any;
 }
 declare const MyButton: FC<MyButtonProps>;
 
@@ -1632,4 +1632,4 @@ interface ThemeProviderProps {
 }
 declare const ThemeProvider: React.FC<ThemeProviderProps>;
 
-export { MyButton as Button, Card, MyTextField as TextField, ThemeProvider, ThemeProvider as default, useTheme };
+export { MyButton as Button, Card, MyTextField as TextField, ThemeProvider, useTheme };

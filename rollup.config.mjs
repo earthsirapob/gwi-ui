@@ -8,6 +8,12 @@ import copy from 'rollup-plugin-copy'
 export default [
   {
     input: 'src/index.ts',
+    external: [
+      'react',
+      'react-dom',
+      '@mui/material/styles',
+      'styled-components',
+    ],
     output: [
       {
         file: 'dist/cjs/index.js',
@@ -27,7 +33,7 @@ export default [
       copy({
         targets: [
           { src: 'src/theme/*.json', dest: 'dist/esm/types' },
-          { src: 'src/theme/*..json', dest: 'dist/cjs/types' },
+          { src: 'src/theme/*.json', dest: 'dist/cjs/types' },
         ],
         flatten: false,
       }),
@@ -36,6 +42,12 @@ export default [
   },
   {
     input: 'dist/esm/types/index.d.ts',
+    external: [
+      'react',
+      'react-dom',
+      '@mui/material/styles',
+      'styled-components',
+    ],
     output: [
       {
         file: 'dist/index.d.ts',

@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-interface MyButtonProps {
+import { ButtonProps } from '@mui/material/Button';
+interface MyButtonProps extends ButtonProps {
     children: React.ReactNode;
     onClick?: () => void;
-    [key: string]: any;
 }
 declare const MyButton: FC<MyButtonProps>;
 export default MyButton;
